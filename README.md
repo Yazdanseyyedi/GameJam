@@ -1,11 +1,13 @@
 # Alter Tank
 
-- [ ] Mercury
-- [x] Venus
-- [x] Earth (Orbit/Moon)
-- [x] Mars
-- [ ] Jupiter
-- [ ] Saturn
-- [ ] Uranus
-- [ ] Neptune
-- [ ] Comet Haley
+- [ ] Setup the project
+- [ ] Make a tile Map
+- [ ] Players moves
+- [ ] Players Fires
+- [ ] Show Results
+- [ ] Restart
+- [ ] Make Combos
+- [ ] Sound And effects
+- [ ] multiple map
+- [ ] Start and quite
+
