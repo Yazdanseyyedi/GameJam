@@ -1,6 +1,6 @@
 # Alter Tank
 
-- [ ] Setup the project
+- [X] Setup the project
 - [ ] Make a tile Map
 - [ ] Players moves
 - [ ] Players Fires
