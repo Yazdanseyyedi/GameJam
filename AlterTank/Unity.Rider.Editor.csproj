@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{3DD6486B-9FAC-5C53-DB35-0BFC705E41EE}</ProjectGuid>
+    <ProjectGuid>{6C9BAD34-4F87-A13C-FC0A-214CB1FE145E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.Rider.Editor</AssemblyName>
@@ -282,7 +282,7 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>D:/UNI/9/game/codes/GameJam/Alter Tank/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>D:/UNI/9/game/codes/GameJam/AlterTank/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -641,15 +641,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{74116B62-8657-DF9B-E41B-5E0F791C7783}</Project>
+      <Project>{F1430989-21D3-F3C8-4488-5C79761BFFD0}</Project>
       <Name>UnityEditor.TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{3974AAA3-2288-720E-E9FF-88E78F05FB7D}</Project>
+      <Project>{FDE8289E-37FA-4DD1-6C3D-A9A1EE72F6BF}</Project>
       <Name>UnityEditor.UI</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{F2263AB0-C124-4F03-8A6F-C7E5AD06E3DD}</Project>
+      <Project>{0DCE2CE1-0593-CB68-395C-FF2E8D5496B7}</Project>
       <Name>UnityEngine.UI</Name>
     </ProjectReference>
   </ItemGroup>

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - wall
+  - bullet
+  - northWalls
+  - southWalls
   layers:
   - Default
   - TransparentFX
