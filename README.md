@@ -2,8 +2,8 @@
 
 - [X] Setup the project
 - [ ] Make a tile Map
-- [ ] Players moves
-- [ ] Players Fires
+- [X] Players moves
+- [X] Players Fires
 - [ ] Show Results
 - [ ] Restart
 - [ ] Make Combos
