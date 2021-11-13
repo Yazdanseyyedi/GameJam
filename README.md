@@ -6,7 +6,7 @@
 - [X] Players Fires
 - [X] Show Results
 - [X] Restart
-- [ ] Make Combos
+- [X] Make Combos
 - [ ] Sound And effects
 - [ ] multiple map
 - [ ] Start and quite
