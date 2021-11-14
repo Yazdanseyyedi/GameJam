@@ -16,6 +16,8 @@ public class greenTank : MonoBehaviour
     public GameObject mineObject;
     public comboplacer comboplacer;
     public int MineLimit=3;
+    public bool shieldActivate;
+    public GameObject shield;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,14 @@ public class greenTank : MonoBehaviour
         {
             BulletLimit = 5;
             BulletDeadTime = 5f;
+        }
+        if (shieldActivate)
+        {
+            shield.SetActive(true);
+        }
+        else
+        {
+            shield.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -56,7 +66,7 @@ public class greenTank : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            if (Activecombo == "")
+            if (Activecombo == "" || Activecombo == "shield")
             {
                 
                 if (BulletLimit > 0)
@@ -102,8 +112,18 @@ public class greenTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            Score.UpdateRedScore();
-            Score.ReloadGame();
+            if (shieldActivate)
+            {
+                shieldActivate = false;
+                Destroy(collision.gameObject);
+
+            }
+            else
+            {
+                Score.UpdateRedScore();
+                Score.ReloadGame();
+            }
+            
             //Destroy(this.gameObject);
             //Destroy(collision.gameObject);
         }
@@ -113,6 +133,11 @@ public class greenTank : MonoBehaviour
             //Destroy(this.gameObject);
             Destroy(collision.gameObject);
             Activecombo = comboplacer.combos[UnityEngine.Random.Range(0, comboplacer.combos.Length)];
+            if (Activecombo=="shield")
+            {
+
+                shieldActivate = true;
+            }
         }
 
     }
@@ -121,9 +146,19 @@ public class greenTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("mine"))
         {
+            if (shieldActivate)
+            {
+                shieldActivate = false;
+                Destroy(collision.gameObject);
 
-            Score.UpdateRedScore();
-            Score.ReloadGame();
+            }
+            else
+            {
+                Score.UpdateRedScore();
+                Score.ReloadGame();
+            }
+
+            
         }
     }
 }
