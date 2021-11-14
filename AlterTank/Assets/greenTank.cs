@@ -9,6 +9,9 @@ public class greenTank : MonoBehaviour
     public Rigidbody2D GreenTank;
     private Vector3 tankDiraction;
     public GameObject bulletObject;
+    public float BulletDeadTime;
+    public int BulletLimit;
+    public Scores Score;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +21,19 @@ public class greenTank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (BulletLimit == 0)
+        {
+            BulletDeadTime -= Time.deltaTime;
+
+        }
+        if (BulletDeadTime < 0)
+        {
+            BulletLimit = 5;
+            BulletDeadTime = 5f;
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+        }
         if (Input.GetKey(KeyCode.UpArrow))
         {
             TankMove(1,0);
@@ -36,10 +52,18 @@ public class greenTank : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            GameObject bullet;
-            bullet = Instantiate(bulletObject);
-            bullet.transform.position = transform.position + new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
-            
+            if (BulletLimit > 0)
+            {
+                BulletLimit -= 1;
+
+            }
+
+            if (BulletLimit > 0)
+            {
+                GameObject bullet;
+                bullet = Instantiate(bulletObject);
+                bullet.transform.position = transform.position + new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
+            }
         }
     }
 
@@ -57,10 +81,13 @@ public class greenTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            Destroy(this.gameObject);
-            Destroy(collision.gameObject);
-           
+            Score.UpdateRedScore();
+            Score.ReloadGame();
+            //Destroy(this.gameObject);
+            //Destroy(collision.gameObject);
+
+
         }
-        
+
     }
 }

@@ -9,6 +9,10 @@ public class RedTank : MonoBehaviour
     public Rigidbody2D redTank;
     private Vector3 tankDiraction;
     public GameObject bulletObject;
+    public float BulletDeadTime;
+    public int BulletLimit;
+    public Scores Score;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +22,16 @@ public class RedTank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (BulletLimit == 0)
+        {
+            BulletDeadTime -= Time.deltaTime;
+
+        }
+        if (BulletDeadTime < 0)
+        {
+            BulletLimit = 5;
+            BulletDeadTime = 5f;
+        }
         if (Input.GetKey(KeyCode.W))
         {
             TankMove(1, 0);
@@ -37,9 +51,19 @@ public class RedTank : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            GameObject bullet;
-            bullet = Instantiate(bulletObject);
-            bullet.transform.position = transform.position + new Vector3(redTank.GetRelativeVector(Vector2.up).x, redTank.GetRelativeVector(Vector2.up).y, 1);
+            if (BulletLimit > 0)
+            {
+                BulletLimit -= 1;
+
+            }
+
+            if (BulletLimit > 0)
+            {
+                GameObject bullet;
+                bullet = Instantiate(bulletObject);
+                bullet.transform.position = transform.position + new Vector3(redTank.GetRelativeVector(Vector2.up).x, redTank.GetRelativeVector(Vector2.up).y, 1);
+            }
+            
 
         }
     }
@@ -58,8 +82,10 @@ public class RedTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            Destroy(this.gameObject);
-            Destroy(collision.gameObject);
+            Score.UpdateGreenScore();
+            Score.ReloadGame();
+            //Destroy(this.gameObject);
+            //Destroy(collision.gameObject);
 
         }
 

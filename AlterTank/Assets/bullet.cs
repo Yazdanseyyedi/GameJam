@@ -18,6 +18,7 @@ public class bullet : MonoBehaviour
     void Update()
     {
         transform.position += moveDirection * 0.04f;
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
