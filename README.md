@@ -8,6 +8,5 @@
 - [X] Restart
 - [X] Make Combos
 - [X] Sound And effects
-- [ ] multiple map
-- [ ] Start and quite
+
 
