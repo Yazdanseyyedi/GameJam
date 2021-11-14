@@ -664,6 +664,7 @@
     <Compile Include="Assets\RedTank.cs" />
     <Compile Include="Assets\Scores.cs" />
     <Compile Include="Assets\bullet.cs" />
+    <Compile Include="Assets\comboplacer.cs" />
     <Compile Include="Assets\greenTank.cs" />
     <Compile Include="Assets\redbullet.cs" />
   </ItemGroup>

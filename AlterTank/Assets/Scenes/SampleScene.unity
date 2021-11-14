@@ -12770,7 +12770,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425630088}
   m_LocalRotation: {x: -0, y: -0, z: -0.23861274, w: 0.9711148}
-  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: -0.06, y: 1.32, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 1608615261}
@@ -12836,15 +12836,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcdbcfce57f7d2346be743f1270db38e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.01
+  moveSpeed: 0.05
   rotationSpeed: 1.5
   GreenTank: {fileID: 1425630092}
   bulletObject: {fileID: 632688370}
   BulletDeadTime: 5
-  ReloadTime: 5
-  ReloadStart: 0
   BulletLimit: 5
   Score: {fileID: 1414611017}
+  Activecombo: 
+  mineObject: {fileID: 4960649181701317445, guid: 9b4572a06731ac04191c6c8e0b19e65a,
+    type: 3}
+  comboplacer: {fileID: 2020076504}
+  MineLimit: 3
 --- !u!1 &1431184047
 GameObject:
   m_ObjectHideFlags: 0
@@ -19429,6 +19432,58 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2020076503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2020076505}
+  - component: {fileID: 2020076504}
+  m_Layer: 0
+  m_Name: ComboPlacer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2020076504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020076503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df0e2763338f95479eac341be7cfbaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comboPrefab: {fileID: 5912724736194467077, guid: f51e520aa71ed7347ba14c81943f75fe,
+    type: 3}
+  timer: 0
+  minX: 0
+  maxX: 4
+  minY: -4
+  maxY: 4
+  combos:
+  - mine
+--- !u!4 &2020076505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020076503}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.6343546, y: -0.088608816, z: -30.140625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2030889687
 GameObject:
   m_ObjectHideFlags: 0
@@ -20088,13 +20143,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53e0d06ca32333438ac61acced95b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.02
+  moveSpeed: 0.05
   rotationSpeed: 1.5
   redTank: {fileID: 2086324430}
   bulletObject: {fileID: 769307131}
   BulletDeadTime: 5
   BulletLimit: 5
   Score: {fileID: 1414611017}
+  Activecombo: 
+  mineObject: {fileID: 4960649181701317445, guid: 9b4572a06731ac04191c6c8e0b19e65a,
+    type: 3}
+  comboplacer: {fileID: 2020076504}
+  MineLimit: 3
 --- !u!50 &2086324430
 Rigidbody2D:
   serializedVersion: 4
@@ -20200,7 +20260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086324428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.98, y: -3.98, z: 0}
+  m_LocalPosition: {x: 7.75, y: -4.05, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 1143036270}

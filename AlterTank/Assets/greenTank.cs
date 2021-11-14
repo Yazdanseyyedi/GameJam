@@ -12,6 +12,10 @@ public class greenTank : MonoBehaviour
     public float BulletDeadTime;
     public int BulletLimit;
     public Scores Score;
+    public string Activecombo;
+    public GameObject mineObject;
+    public comboplacer comboplacer;
+    public int MineLimit=3;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,18 +56,35 @@ public class greenTank : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            if (BulletLimit > 0)
+            if (Activecombo == "")
             {
-                BulletLimit -= 1;
-
+                
+                if (BulletLimit > 0)
+                {
+                    BulletLimit -= 1;
+                    GameObject bullet;
+                    bullet = Instantiate(bulletObject);
+                    bullet.transform.position = transform.position + new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
+                }
             }
-
-            if (BulletLimit > 0)
+            if (Activecombo == "mine")
             {
-                GameObject bullet;
-                bullet = Instantiate(bulletObject);
-                bullet.transform.position = transform.position + new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
+                if (MineLimit > 0)
+                {
+                    MineLimit -= 1;
+                    GameObject mine;
+                    mine = Instantiate(mineObject);
+                    mine.transform.position = transform.position - new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
+
+                }
+
+                if (MineLimit == 0)
+                {
+                    Activecombo = "";
+                    MineLimit = 3;
+                }
             }
+            
         }
     }
 
@@ -85,9 +106,24 @@ public class greenTank : MonoBehaviour
             Score.ReloadGame();
             //Destroy(this.gameObject);
             //Destroy(collision.gameObject);
-
-
+        }
+        if (collision.gameObject.CompareTag("combo"))
+        {
+            
+            //Destroy(this.gameObject);
+            Destroy(collision.gameObject);
+            Activecombo = comboplacer.combos[UnityEngine.Random.Range(0, comboplacer.combos.Length)];
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("mine"))
+        {
+
+            Score.UpdateRedScore();
+            Score.ReloadGame();
+        }
     }
 }

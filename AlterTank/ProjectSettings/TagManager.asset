@@ -8,6 +8,8 @@ TagManager:
   - bullet
   - northWalls
   - southWalls
+  - combo
+  - mine
   layers:
   - Default
   - TransparentFX
