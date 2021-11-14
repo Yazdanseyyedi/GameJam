@@ -7,7 +7,7 @@
 - [X] Show Results
 - [X] Restart
 - [X] Make Combos
-- [ ] Sound And effects
+- [X] Sound And effects
 - [ ] multiple map
 - [ ] Start and quite
 
