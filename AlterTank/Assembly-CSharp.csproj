@@ -70,6 +70,7 @@
     <Compile Include="Assets\comboplacer.cs" />
     <Compile Include="Assets\greenTank.cs" />
     <Compile Include="Assets\redbullet.cs" />
+    <Compile Include="Assets\reloadgame.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

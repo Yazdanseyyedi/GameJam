@@ -36,7 +36,10 @@ public class redbullet : MonoBehaviour
         {
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
-
+        }
+        if (collision.gameObject.CompareTag("tank"))
+        {
+            Destroy(this.gameObject);
         }
     }
 }

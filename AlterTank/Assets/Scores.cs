@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Scores : MonoBehaviour
@@ -42,8 +41,6 @@ public class Scores : MonoBehaviour
         PlayerPrefs.SetInt("RedScore", int.Parse(redScore.text));
         PlayerPrefs.SetInt("GreenScore", int.Parse(greenScore.text));
         PlayerPrefs.SetInt("ReloadGame", 1);
-        SceneManager.LoadScene(0);
-
     }
 
     public void UpdateRedScore()

@@ -18,6 +18,9 @@ public class greenTank : MonoBehaviour
     public int MineLimit=3;
     public bool shieldActivate;
     public GameObject shield;
+    public Animator animator;
+    public bool defeated;
+    public reloadgame reloadgame;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,75 +30,83 @@ public class greenTank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BulletLimit == 0)
+        if (defeated)
         {
-            BulletDeadTime -= Time.deltaTime;
-
-        }
-        if (BulletDeadTime < 0)
-        {
-            BulletLimit = 5;
-            BulletDeadTime = 5f;
-        }
-        if (shieldActivate)
-        {
-            shield.SetActive(true);
+            reloadgame.Reload();
         }
         else
         {
-            shield.SetActive(false);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            TankMove(1,0);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            TankMove(-1,0);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            TankMove(0,1);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            TankMove(0,-1);
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if (Activecombo == "" || Activecombo == "shield")
+            if (BulletLimit == 0)
             {
-                
-                if (BulletLimit > 0)
-                {
-                    BulletLimit -= 1;
-                    GameObject bullet;
-                    bullet = Instantiate(bulletObject);
-                    bullet.transform.position = transform.position + new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
-                }
+                BulletDeadTime -= Time.deltaTime;
+
             }
-            if (Activecombo == "mine")
+            if (BulletDeadTime < 0)
             {
-                if (MineLimit > 0)
-                {
-                    MineLimit -= 1;
-                    GameObject mine;
-                    mine = Instantiate(mineObject);
-                    mine.transform.position = transform.position - new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
-
-                }
-
-                if (MineLimit == 0)
-                {
-                    Activecombo = "";
-                    MineLimit = 3;
-                }
+                BulletLimit = 5;
+                BulletDeadTime = 5f;
             }
-            
+            if (shieldActivate)
+            {
+                shield.SetActive(true);
+            }
+            else
+            {
+                shield.SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+            }
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                TankMove(1, 0);
+            }
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                TankMove(-1, 0);
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                TankMove(0, 1);
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                TankMove(0, -1);
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                if (Activecombo == "" || Activecombo == "shield")
+                {
+
+                    if (BulletLimit > 0)
+                    {
+                        BulletLimit -= 1;
+                        GameObject bullet;
+                        bullet = Instantiate(bulletObject);
+                        bullet.transform.position = transform.position + new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
+                    }
+                }
+                if (Activecombo == "mine")
+                {
+                    if (MineLimit > 0)
+                    {
+                        MineLimit -= 1;
+                        GameObject mine;
+                        mine = Instantiate(mineObject);
+                        mine.transform.position = transform.position - new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
+
+                    }
+
+                    if (MineLimit == 0)
+                    {
+                        Activecombo = "";
+                        MineLimit = 3;
+                    }
+                }
+
+            }
         }
+        
     }
 
     public void TankMove(int forward,int rotate)
@@ -103,7 +114,7 @@ public class greenTank : MonoBehaviour
         float translation = forward * moveSpeed;
         float rotation = -rotate * rotationSpeed;
         GreenTank.rotation += rotation * Mathf.Sign(Vector2.Dot(GreenTank.velocity, GreenTank.GetRelativeVector(Vector2.up)));
-        tankDiraction = new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 1);
+        tankDiraction = new Vector3(GreenTank.GetRelativeVector(Vector2.up).x, GreenTank.GetRelativeVector(Vector2.up).y, 0);
         transform.position += tankDiraction * translation;
     }
 
@@ -112,33 +123,30 @@ public class greenTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            if (shieldActivate)
+            if (!defeated)
             {
-                shieldActivate = false;
-                Destroy(collision.gameObject);
+                if (shieldActivate)
+                {
+                    shieldActivate = false;
+                    Destroy(collision.gameObject);
 
+                }
+                else
+                {
+                    Score.UpdateRedScore();
+                    animator.SetBool("GreenDefeat", true);
+                    Score.ReloadGame();
+                    defeated = true;
+                }
             }
-            else
-            {
-                Score.UpdateRedScore();
-                Score.ReloadGame();
-            }
-            
+            Destroy(collision.gameObject);
+
+
+
             //Destroy(this.gameObject);
             //Destroy(collision.gameObject);
         }
-        if (collision.gameObject.CompareTag("combo"))
-        {
-            
-            //Destroy(this.gameObject);
-            Destroy(collision.gameObject);
-            Activecombo = comboplacer.combos[UnityEngine.Random.Range(0, comboplacer.combos.Length)];
-            if (Activecombo=="shield")
-            {
 
-                shieldActivate = true;
-            }
-        }
 
     }
 
@@ -146,19 +154,39 @@ public class greenTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("mine"))
         {
-            if (shieldActivate)
+            if (!defeated)
             {
-                shieldActivate = false;
-                Destroy(collision.gameObject);
+                if (shieldActivate)
+                {
+                    shieldActivate = false;
+                    Destroy(collision.gameObject);
 
-            }
-            else
-            {
-                Score.UpdateRedScore();
-                Score.ReloadGame();
-            }
 
+                }
+                else
+                {
+                    Score.UpdateRedScore();
+                    animator.SetBool("GreenDefeat", true);
+                    Score.ReloadGame();
+                    Destroy(collision.gameObject);
+                    defeated = true;
+                }
+            }
             
+
+
+        }
+        if (collision.gameObject.CompareTag("combo"))
+        {
+
+            //Destroy(this.gameObject);
+            Destroy(collision.gameObject);
+            Activecombo = comboplacer.combos[UnityEngine.Random.Range(0, comboplacer.combos.Length)];
+            if (Activecombo == "shield")
+            {
+
+                shieldActivate = true;
+            }
         }
     }
 }

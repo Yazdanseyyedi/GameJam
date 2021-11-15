@@ -10,6 +10,7 @@ TagManager:
   - southWalls
   - combo
   - mine
+  - tank
   layers:
   - Default
   - TransparentFX

@@ -18,6 +18,9 @@ public class RedTank : MonoBehaviour
     public int MineLimit = 3;
     public bool shieldActivate;
     public GameObject shield;
+    public Animator animator;
+    public bool defeated;
+    public reloadgame reloadgame;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,75 +30,83 @@ public class RedTank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BulletLimit == 0)
+        if (defeated)
         {
-            BulletDeadTime -= Time.deltaTime;
-
-        }
-        if (BulletDeadTime < 0)
-        {
-            BulletLimit = 5;
-            BulletDeadTime = 5f;
-        }
-        if (shieldActivate)
-        {
-            shield.SetActive(true);
+            reloadgame.Reload();
         }
         else
         {
-            shield.SetActive(false);
-
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            TankMove(1, 0);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            TankMove(-1, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            TankMove(0, 1);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            TankMove(0, -1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (Activecombo == "" || Activecombo == "shield")
+            if (BulletLimit == 0)
             {
+                BulletDeadTime -= Time.deltaTime;
 
-                if (BulletLimit > 0)
-                {
-                    BulletLimit -= 1;
-                    GameObject bullet;
-                    bullet = Instantiate(bulletObject);
-                    bullet.transform.position = transform.position + new Vector3(redTank.GetRelativeVector(Vector2.up).x, redTank.GetRelativeVector(Vector2.up).y, 1);
-                }
             }
-            if (Activecombo == "mine")
+            if (BulletDeadTime < 0)
             {
-                if (MineLimit > 0)
-                {
-                    MineLimit -= 1;
-                    GameObject mine;
-                    mine = Instantiate(mineObject);
-                    mine.transform.position = transform.position - new Vector3(redTank.GetRelativeVector(Vector2.up).x, redTank.GetRelativeVector(Vector2.up).y, 1);
+                BulletLimit = 5;
+                BulletDeadTime = 5f;
+            }
+            if (shieldActivate)
+            {
+                shield.SetActive(true);
+            }
+            else
+            {
+                shield.SetActive(false);
 
-                }
-
-                if (MineLimit == 0)
-                {
-                    Activecombo = "";
-                    MineLimit = 3;
-                }
+            }
+            if (Input.GetKey(KeyCode.W))
+            {
+                TankMove(1, 0);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                TankMove(-1, 0);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                TankMove(0, 1);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                TankMove(0, -1);
             }
 
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if (Activecombo == "" || Activecombo == "shield")
+                {
 
+                    if (BulletLimit > 0)
+                    {
+                        BulletLimit -= 1;
+                        GameObject bullet;
+                        bullet = Instantiate(bulletObject);
+                        bullet.transform.position = transform.position + new Vector3(redTank.GetRelativeVector(Vector2.up).x, redTank.GetRelativeVector(Vector2.up).y, 1);
+                    }
+                }
+                if (Activecombo == "mine")
+                {
+                    if (MineLimit > 0)
+                    {
+                        MineLimit -= 1;
+                        GameObject mine;
+                        mine = Instantiate(mineObject);
+                        mine.transform.position = transform.position - new Vector3(redTank.GetRelativeVector(Vector2.up).x, redTank.GetRelativeVector(Vector2.up).y, 1);
+
+                    }
+
+                    if (MineLimit == 0)
+                    {
+                        Activecombo = "";
+                        MineLimit = 3;
+                    }
+                }
+
+
+            }
         }
+        
     }
 
     public void TankMove(int forward, int rotate)
@@ -103,7 +114,7 @@ public class RedTank : MonoBehaviour
         float translation = forward * moveSpeed;
         float rotation = -rotate * rotationSpeed;
         redTank.rotation += rotation * Mathf.Sign(Vector2.Dot(redTank.velocity, redTank.GetRelativeVector(Vector2.up)));
-        tankDiraction = new Vector3(redTank.GetRelativeVector(Vector2.up).x, redTank.GetRelativeVector(Vector2.up).y, 1);
+        tankDiraction = new Vector3(redTank.GetRelativeVector(Vector2.up).x, redTank.GetRelativeVector(Vector2.up).y, 0);
         transform.position += tankDiraction * translation;
     }
 
@@ -112,20 +123,56 @@ public class RedTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            if (shieldActivate)
+            if (!defeated)
             {
-                shieldActivate = false;
-                Destroy(collision.gameObject);
+                if (shieldActivate)
+                {
+                    shieldActivate = false;
+                    Destroy(collision.gameObject);
 
+                }
+                else
+                {
+                    Score.UpdateGreenScore();
+                    animator.SetBool("RedDefeat", true);
+                    Score.ReloadGame();
+                    defeated = true;
+                }
             }
-            else
-            {
-                Score.UpdateGreenScore();
-                Score.ReloadGame();
-            }
-            
+            Destroy(collision.gameObject);
+
+
+
             //Destroy(this.gameObject);
             //Destroy(collision.gameObject);
+        }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("mine"))
+        {
+            if (!defeated)
+            {
+                if (shieldActivate)
+                {
+                    shieldActivate = false;
+                    Destroy(collision.gameObject);
+
+
+                }
+                else
+                {
+                    Score.UpdateGreenScore();
+                    animator.SetBool("RedDefeat", true);
+                    Score.ReloadGame();
+                    Destroy(collision.gameObject);
+                    defeated = true;
+                }
+            }
+
+
 
         }
         if (collision.gameObject.CompareTag("combo"))
@@ -138,26 +185,6 @@ public class RedTank : MonoBehaviour
             {
 
                 shieldActivate = true;
-            }
-        }
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("mine"))
-        {
-
-            if (shieldActivate)
-            {
-                shieldActivate = false;
-                Destroy(collision.gameObject);
-
-            }
-            else
-            {
-                Score.UpdateRedScore();
-                Score.ReloadGame();
             }
         }
     }
