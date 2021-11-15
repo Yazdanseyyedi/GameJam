@@ -21,6 +21,7 @@ public class RedTank : MonoBehaviour
     public Animator animator;
     public bool defeated;
     public reloadgame reloadgame;
+    public soundController soundController;
     // Start is called before the first frame update
     void Start()
     {
@@ -79,6 +80,7 @@ public class RedTank : MonoBehaviour
 
                     if (BulletLimit > 0)
                     {
+                        soundController.shotsound();
                         BulletLimit -= 1;
                         GameObject bullet;
                         bullet = Instantiate(bulletObject);
@@ -89,6 +91,7 @@ public class RedTank : MonoBehaviour
                 {
                     if (MineLimit > 0)
                     {
+                        soundController.minesound();
                         MineLimit -= 1;
                         GameObject mine;
                         mine = Instantiate(mineObject);
@@ -128,6 +131,7 @@ public class RedTank : MonoBehaviour
                 if (shieldActivate)
                 {
                     shieldActivate = false;
+                    soundController.shieldbreaksound();
                     Destroy(collision.gameObject);
 
                 }
@@ -137,6 +141,7 @@ public class RedTank : MonoBehaviour
                     animator.SetBool("RedDefeat", true);
                     Score.ReloadGame();
                     defeated = true;
+                    soundController.explosionsound();
                 }
             }
             Destroy(collision.gameObject);
@@ -158,6 +163,7 @@ public class RedTank : MonoBehaviour
                 if (shieldActivate)
                 {
                     shieldActivate = false;
+                    soundController.shieldbreaksound();
                     Destroy(collision.gameObject);
 
 
@@ -169,6 +175,7 @@ public class RedTank : MonoBehaviour
                     Score.ReloadGame();
                     Destroy(collision.gameObject);
                     defeated = true;
+                    soundController.explosionsound();
                 }
             }
 
@@ -180,6 +187,7 @@ public class RedTank : MonoBehaviour
 
             //Destroy(this.gameObject);
             Destroy(collision.gameObject);
+            soundController.combosound();
             Activecombo = comboplacer.combos[UnityEngine.Random.Range(0, comboplacer.combos.Length)];
             if (Activecombo == "shield")
             {

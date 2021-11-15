@@ -668,6 +668,7 @@
     <Compile Include="Assets\greenTank.cs" />
     <Compile Include="Assets\redbullet.cs" />
     <Compile Include="Assets\reloadgame.cs" />
+    <Compile Include="Assets\soundController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

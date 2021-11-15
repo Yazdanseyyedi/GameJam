@@ -21,6 +21,7 @@ public class greenTank : MonoBehaviour
     public Animator animator;
     public bool defeated;
     public reloadgame reloadgame;
+    public soundController soundController;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +81,7 @@ public class greenTank : MonoBehaviour
 
                     if (BulletLimit > 0)
                     {
+                        soundController.shotsound();
                         BulletLimit -= 1;
                         GameObject bullet;
                         bullet = Instantiate(bulletObject);
@@ -90,6 +92,7 @@ public class greenTank : MonoBehaviour
                 {
                     if (MineLimit > 0)
                     {
+                        soundController.minesound();
                         MineLimit -= 1;
                         GameObject mine;
                         mine = Instantiate(mineObject);
@@ -128,6 +131,7 @@ public class greenTank : MonoBehaviour
                 if (shieldActivate)
                 {
                     shieldActivate = false;
+                    soundController.shieldbreaksound();
                     Destroy(collision.gameObject);
 
                 }
@@ -137,6 +141,7 @@ public class greenTank : MonoBehaviour
                     animator.SetBool("GreenDefeat", true);
                     Score.ReloadGame();
                     defeated = true;
+                    soundController.explosionsound();
                 }
             }
             Destroy(collision.gameObject);
@@ -159,6 +164,7 @@ public class greenTank : MonoBehaviour
                 if (shieldActivate)
                 {
                     shieldActivate = false;
+                    soundController.shieldbreaksound();
                     Destroy(collision.gameObject);
 
 
@@ -170,6 +176,8 @@ public class greenTank : MonoBehaviour
                     Score.ReloadGame();
                     Destroy(collision.gameObject);
                     defeated = true;
+                    soundController.explosionsound();
+
                 }
             }
             
@@ -181,6 +189,7 @@ public class greenTank : MonoBehaviour
 
             //Destroy(this.gameObject);
             Destroy(collision.gameObject);
+            soundController.combosound();
             Activecombo = comboplacer.combos[UnityEngine.Random.Range(0, comboplacer.combos.Length)];
             if (Activecombo == "shield")
             {

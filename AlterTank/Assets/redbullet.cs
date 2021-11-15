@@ -11,7 +11,7 @@ public class redbullet : MonoBehaviour
     void Start()
     {
         Debug.Log(redTank.transform.position);
-        moveDirection = new Vector3(RedTank.GetRelativeVector(Vector2.up).x, RedTank.GetRelativeVector(Vector2.up).y, 1);
+        moveDirection = new Vector3(RedTank.GetRelativeVector(Vector2.up).x, RedTank.GetRelativeVector(Vector2.up).y, 0);
     }
 
     // Update is called once per frame
@@ -24,12 +24,12 @@ public class redbullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("northWalls"))
         {
-            moveDirection = new Vector3(moveDirection.x, -moveDirection.y, 1);
+            moveDirection = new Vector3(moveDirection.x, -moveDirection.y, 0);
 
         }
         if (collision.gameObject.CompareTag("southWalls"))
         {
-            moveDirection = new Vector3(-moveDirection.x, moveDirection.y, 1);
+            moveDirection = new Vector3(-moveDirection.x, moveDirection.y, 0);
 
         }
         if (collision.gameObject.CompareTag("bullet"))
